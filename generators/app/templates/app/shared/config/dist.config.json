@@ -1,0 +1,12 @@
+{
+  "ENV": {
+    "BACKEND": {
+      "URL": {
+        "FULL": "http://production.server.com"
+      }
+    },
+    "I18N": {
+      "BASE_URL": "/js/i18n/"
+    }
+  }
+}

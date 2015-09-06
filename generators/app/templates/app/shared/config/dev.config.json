@@ -1,0 +1,12 @@
+{
+  "ENV": {
+    "BACKEND": {
+      "URL": {
+        "FULL": "http://localhost:1337"
+      }
+    },
+    "I18N": {
+      "BASE_URL": "/js/i18n/"
+    }
+  }
+}
