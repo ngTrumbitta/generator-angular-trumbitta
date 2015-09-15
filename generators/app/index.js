@@ -23,7 +23,7 @@ module.exports = yeoman.generators.Base.extend({
           chalk.green('\n[OK] robotcrasher') +
           chalk.red('\n[KO] suPer Awesome Robot-Crasher!') +
           '\n\nDefault: ',
-        default: 'mytestapp'
+        default: 'robotcrasher'
       },
       {
         type: 'input',
@@ -36,7 +36,7 @@ module.exports = yeoman.generators.Base.extend({
           chalk.green('\n[OK] A robot crashing app') +
           chalk.red('\n[KO] app') +
           '\n\nDefault: ',
-        default: 'My test application'
+        default: 'A robot crashing app with Spaceship integrations'
       },
       {
         type: 'input',
@@ -44,7 +44,7 @@ module.exports = yeoman.generators.Base.extend({
         message:
           'Enter your full name' +
           '\n\nDefault: ',
-        default: 'Name Surname'
+        default: 'Panzer Kunst'
       },
       {
         type: 'input',
@@ -52,7 +52,7 @@ module.exports = yeoman.generators.Base.extend({
         message:
           'Enter your email' +
           '\n\nDefault: ',
-        default: 'yourname@example.com'
+        default: 'gunnm@nova.com'
       }
     ];
 
@@ -102,12 +102,20 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('.editorconfig')
     );
     this.fs.copy(
+      this.templatePath('jscsrc'),
+      this.destinationPath('.jscsrc')
+    );
+    this.fs.copy(
       this.templatePath('jshintignore'),
       this.destinationPath('.jshintignore')
     );
     this.fs.copy(
       this.templatePath('jshintrc'),
       this.destinationPath('.jshintrc')
+    );
+    this.fs.copy(
+      this.templatePath('npmignore'),
+      this.destinationPath('.npmignore')
     );
   },
 

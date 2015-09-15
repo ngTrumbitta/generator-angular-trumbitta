@@ -4,7 +4,7 @@ angular
     'app.controllers.home'
   ])
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider) {
     'use strict';
 
     $stateProvider
