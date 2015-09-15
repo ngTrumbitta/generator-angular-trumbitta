@@ -10,6 +10,4 @@ angular.module('app.controllers.home', [])
     vm.name = 'World!';
     vm.greeting = greetingStart + ' ' + vm.name;
 
-  }
-
-);
+  });

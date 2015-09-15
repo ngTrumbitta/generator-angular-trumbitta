@@ -6,7 +6,7 @@
       }
     },
     "I18N": {
-      "BASE_URL": "/js/i18n/"
+      "BASE_URL": "/i18n/"
     }
   }
 }
