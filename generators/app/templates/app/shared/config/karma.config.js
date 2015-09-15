@@ -19,8 +19,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
 
     files: [
-      'tmp/build/js/_bower.js',
-      'bower_components/angular-mocks/angular-mocks.js',
+      // bower:js
+      // endbower
       'app/**/*.service.js',
       'app/**/*.factory.js',
       'app/**/*.filter.js',
@@ -29,7 +29,7 @@ module.exports = function(config) {
       'app/**/*.controller.js',
       'app/**/*.routes.js',
       'app/**/*.module.js',
-      'tmp/build/js/config.js',
+      'tmp/build/dev/js/config.js',
       'app/**/*.spec.js'
     ],
 
@@ -94,19 +94,19 @@ module.exports = function(config) {
     },
 
     ngHtml2JsPreprocessor: {
-        // If your build process changes the path to your templates,
-        // use stripPrefix and prependPrefix to adjust it.
-        // stripPrefix: 'source/path/to/templates/.*/',
-        // prependPrefix: 'web/path/to/templates/',
+      // If your build process changes the path to your templates,
+      // use stripPrefix and prependPrefix to adjust it.
+      // stripPrefix: 'source/path/to/templates/.*/',
+      // prependPrefix: 'web/path/to/templates/',
 
-        // the name of the Angular module to create
-        moduleName: 'app.test.templates'
+      // the name of the Angular module to create
+      moduleName: 'app.test.templates'
     },
 
     // optionally, configure the reporter
     coverageReporter: {
-      type : 'lcov',
-      dir : 'tmp/coverage/',
+      type: 'lcov',
+      dir: 'tmp/coverage/'
       // file: 'coverage.txt'
     }
   });

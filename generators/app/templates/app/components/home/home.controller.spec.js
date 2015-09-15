@@ -17,4 +17,5 @@ describe('Controller: app.controllers.home', function() {
   it('should greet the world', function() {
     expect(vm.greeting).toBe('Hello World!');
   });
+
 });
