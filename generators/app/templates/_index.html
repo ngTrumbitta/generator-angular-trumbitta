@@ -9,20 +9,23 @@
 
     <title><%= appName %></title>
 
-    <!-- Bower concat CSS -->
-    <link href="/css/bower.min.css" rel="stylesheet" />
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(tmp/build/dist) styles/app.css -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app-custom.css">
+    <!-- endbuild -->
 
-    <!-- Custom CSS -->
-    <link href="/css/app.min.css" rel="stylesheet" />
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="/js/html5shiv.js"></script>
-        <script src="/js/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="/js/app-bower.min.js"></script>
-    <script src="/js/app.min.js"></script>
+    <!-- build:js(tmp/build/dist) scripts/scripts.js -->
+    <script src="js/app.concat.js"></script>
+    <!-- endbuild -->
 
   </head>
 

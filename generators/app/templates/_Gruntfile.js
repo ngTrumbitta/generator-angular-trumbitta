@@ -2,7 +2,6 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  var _ = require('lodash');
   require('time-grunt')(grunt);
   require('load-grunt-tasks')(grunt);
 
@@ -14,48 +13,29 @@ module.exports = function(grunt) {
       bower_install: 'bower cache clean --config.interactive=false && bower install --config.interactive=false'
     },
 
-    bower_concat: {
-      all: {
-        dest: '<%= pkg.buildPath %>/js/_bower.js',
-        cssDest: '<%= pkg.buildPath %>/css/_bower.css',
-        include: [
-            'angular',
-            'angular-ui-router',
-            'jquery',
-            'fontawesome',
-            'angular-resource',
-            'angular-gettext',
-            'lodash'
-        ],
-        callback: function(mainFiles) {
-          return _.map(mainFiles, function(filepath) {
-            // Use minified files if available
-            var min = filepath.replace(/\.js$/, '.min.js');
-            return grunt.file.exists(min) ? min : filepath;
-          });
-        }
-      }
-    },
-
-    uglify: {
-      options: {
-        sourceMap: true,
-        sourceMapIncludeSources: true,
-        // the banner is inserted at the top of the output
-        banner: '/*! <%= pkg.appName %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
-      bower: {
-        files: {
-          '<%= pkg.distPath %>/js/<%= pkg.appName %>-bower.min.js': [
-            '<%= bower_concat.all.dest %>'
-          ]
-        }
-      },
+    wiredep: {
       app: {
-        files: {
-          '<%= pkg.distPath %>/js/<%= pkg.appName %>.min.js': [
-            '<%= pkg.buildPath %>/js/<%= pkg.appName %>.annotated.js'
-          ]
+        src: ['<%= pkg.appPath %>/index.html'],
+        ignorePath:  /\.\.\//,
+        exclude: [
+          'bower_components/bootstrap/dist/css/bootstrap.css',
+          'bower_components/bootstrap/dist/js/bootstrap.js'
+        ]
+      },
+      test: {
+        devDependencies: true,
+        src: '<%= karma.unit.configFile %>',
+        ignorePath:  /(\.\.\/){3}/,
+        fileTypes:{
+          js: {
+            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
+            }
+          }
         }
       }
     },
@@ -65,50 +45,41 @@ module.exports = function(grunt) {
         options: {
           bootstrapPath: 'bower_components/bootstrap',
           src: '<%= pkg.appPath %>/assets/less/bootstrap/overrides',
-          dest: '<%= pkg.buildPath %>/less/bootstrap/custom',
+          dest: '<%= pkg.buildPathDev %>/less/bootstrap/custom'
         }
-      },
+      }
     },
 
     less: {
       app: {
         files: {
-          '<%= pkg.buildPath %>/css/app-custom.css': '<%= pkg.appPath %>/assets/less/app-custom.less'
+          '<%= pkg.buildPathDev %>/css/app-custom.css': '<%= pkg.appPath %>/assets/less/app-custom.less'
         }
       },
       bootstrap: {
         files: {
-          '<%= pkg.buildPath %>/css/bootstrap.css': '<%= pkg.buildPath %>/less/bootstrap/custom/bootstrap.less'
+          '<%= pkg.buildPathDev %>/css/bootstrap.css': '<%= pkg.buildPathDev %>/less/bootstrap/custom/bootstrap.less'
         }
       }
-    },
-
-    cssmin: {
-      assets: {
-        options: {
-          banner: '/*! <%= pkg.appName %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-        },
-        files: {
-          '<%= pkg.distPath %>/css/<%= pkg.appName %>.min.css': [
-            '<%= pkg.buildPath %>/css/bootstrap.css',
-            '<%= pkg.buildPath %>/css/**/*.css'
-          ]
-        }
-      },
-      bower: {
-        files: {
-          '<%= pkg.distPath %>/css/bower.min.css': [
-            '<%= bower_concat.all.cssDest %>'
-          ]
-        }
-      }
-
+      // bootstrap_theme: {
+      //   files: {
+      //     '<%= pkg.buildPathDev %>/css/bootstrap-theme.css': '<%= pkg.appPath %>/assets/less/bootstrap/overrides/theme.less'
+      //   }
+      // }
     },
 
     clean: {
-      src: [
-        '<%= pkg.buildPath %>/**/*'
-      ]
+      build: {
+        src: [
+          '<%= pkg.buildPathDev %>/**/*',
+          '<%= pkg.buildPathDist %>/**/*'
+        ]
+      },
+      dist: {
+        src: [
+        '<%= pkg.distPath %>/**/*'
+        ]
+      }
     },
 
     jshint: {
@@ -138,33 +109,74 @@ module.exports = function(grunt) {
 
     },
 
+    jscs: {
+      dev: {
+        options: {
+          config: '<%= pkg.appPath %>/.jscsrc'
+        },
+        files: {
+          src: ['<%= jshint.all.src %>']
+        }
+      }
+    },
+
     copy: {
-      index: {
+      dev_index: {
         src: '<%= pkg.appPath %>/index.html',
-        dest: '<%= pkg.distPath %>/index.html'
+        dest: '<%= pkg.buildPathDev %>/index.html'
       },
-      fontawesome: {
+      dev_glyphicons: {
         expand: true,
-        cwd: 'bower_components/fontawesome',
+        cwd: 'bower_components/bootstrap',
         src: 'fonts/**',
-        dest: '<%= pkg.distPath %>/'
+        dest: '<%= pkg.buildPathDev %>/'
       },
-      images: {
+      dev_i18n_js: {
+        expand: true,
+        cwd: '<%= pkg.appPath %>/assets',
+        src: 'js/i18n/**',
+        dest: '<%= pkg.buildPathDev %>/'
+      },
+      dev_images: {
         expand: true,
         cwd: '<%= pkg.appPath %>/assets',
         src: 'images/**',
+        dest: '<%= pkg.buildPathDev %>/'
+      },
+      dist_prepare: {
+        expand: true,
+        cwd: '<%= pkg.buildPathDev %>',
+        src: '**',
+        dest: '<%= pkg.buildPathDist %>/'
+      },
+      dist_update_html: {
+        expand: true,
+        cwd: '<%= pkg.buildPathDev %>',
+        src: 'index.html',
         dest: '<%= pkg.distPath %>/'
       },
-      jsBowerDev: {
+      dist_update_fonts: {
         expand: true,
-        cwd: '<%= pkg.buildPath %>',
-        src: 'js/_bower.js',
+        cwd: '<%= pkg.buildPathDev %>',
+        src: 'fonts/**',
         dest: '<%= pkg.distPath %>/'
       },
-      jsAppDev: {
+      dist_update_images: {
         expand: true,
-        cwd: '<%= pkg.buildPath %>',
-        src: 'js/<%= pkg.appName %>.annotated.js',
+        cwd: '<%= pkg.buildPathDev %>',
+        src: 'images/**',
+        dest: '<%= pkg.distPath %>/'
+      },
+      dist_update_fontawesome: {
+        expand: true,
+        cwd: '<%= pkg.appPath %>/bower_components/fontawesome',
+        src: 'fonts/**',
+        dest: '<%= pkg.distPath %>/'
+      },
+      dist_update_i18n: {
+        expand: true,
+        cwd: '<%= pkg.appPath %>/assets/js',
+        src: 'i18n/**',
         dest: '<%= pkg.distPath %>/'
       }
     },
@@ -173,7 +185,7 @@ module.exports = function(grunt) {
       app: {
         cwd: '<%= pkg.appPath %>',
         src: 'app/**/**.html',
-        dest: '<%= pkg.buildPath %>/js/views.js',
+        dest: '<%= pkg.buildPathDev %>/js/views.js',
         options: {
           htmlmin: {
             collapseBooleanAttributes: true,
@@ -193,7 +205,7 @@ module.exports = function(grunt) {
         // define a string to put between each file in the concatenated output
         separator: ';'
       },
-      build: {
+      dev: {
         // the files to concatenate
         src: [
           'app/**/*.service.js',
@@ -203,13 +215,31 @@ module.exports = function(grunt) {
           'app/**/*.controller.js',
           'app/**/*.routes.js',
           'app/**/*.module.js',
-          '<%= pkg.buildPath %>/js/views.js',
-          'tmp/build/js/config.js',
+          '<%= pkg.buildPathDev %>/js/views.js',
+          '<%= pkg.buildPathDev %>/js/config.js',
           '<%= ngtemplates.app.dest %>',
           '<%= ngconstant.options.dest %>'
         ],
         // the location of the resulting JS file
-        dest: '<%= pkg.buildPath %>/js/<%= pkg.appName %>.concat.js'
+        dest: '<%= pkg.buildPathDev %>/js/<%= pkg.appName %>.concat.js'
+      },
+      dist: {
+        // the files to concatenate
+        src: [
+          'app/**/*.service.js',
+          'app/**/*.factory.js',
+          'app/**/*.filter.js',
+          'app/**/*.directive.js',
+          'app/**/*.controller.js',
+          'app/**/*.routes.js',
+          'app/**/*.module.js',
+          '<%= pkg.buildPathDev %>/js/views.js',
+          '<%= pkg.buildPathDev %>/js/config.js',
+          '<%= ngtemplates.app.dest %>',
+          '<%= ngconstant.options.dest %>'
+        ],
+        // the location of the resulting JS file
+        dest: '<%= pkg.buildPathDist %>/js/<%= pkg.appName %>.concat.js'
       }
     },
 
@@ -217,46 +247,62 @@ module.exports = function(grunt) {
       all: {
         // Target-specific file lists and/or options go here.
         files: {
-          '<%= pkg.buildPath %>/js/<%= pkg.appName %>.annotated.js': ['<%= concat.build.dest %>']
+          '<%= concat.dist.dest %>': ['<%= concat.dist.dest %>']
         }
-      },
+      }
     },
 
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
+      gruntfile: {
+        files: ['Gruntfile.js'],
+        tasks: ['newer:jscs:dev', 'newer:jshint:all']
+      },
+      index: {
+        files: ['index.html'],
+        tasks: ['copy:dev_index'],
+        options: {
+          livereload: true
+        }
+      },
       js: {
         files: ['<%= jshint.all.src[1] %>'],
-        tasks: ['newer:jshint:all', 'newer:concat', 'newer:ngAnnotate', 'newer:uglify:bower', 'newer:uglify:app', 'newer:jshint:test', 'karma'],
+        tasks: ['newer:jscs:dev', 'newer:jshint:all', 'newer:concat:dev', 'newer:jshint:test', 'karma'],
         options: {
-          livereload: true,
+          livereload: true
         }
       },
       templates: {
         files: ['<%= pkg.appPath %>/app/**/*.template.html'],
-        tasks: ['newer:ngtemplates', 'newer:concat', 'newer:ngAnnotate', 'newer:uglify:bower', 'newer:uglify:app', 'karma'],
+        tasks: ['newer:ngtemplates', 'newer:concat:dev', 'karma'],
         options: {
-          livereload: true,
+          livereload: true
         }
       },
-      less: {
-        files: ['<%= pkg.appPath %>/assets/less/**/*.less'],
-        tasks: ['customize-bootstrap', 'less', 'newer:cssmin'],
+      lessApp: {
+        files: ['<%= pkg.appPath %>/assets/less/*.less'],
+        tasks: ['less:app'],
         options: {
-          livereload: true,
+          livereload: true
         }
       },
-      css: {
-        files: ['<%= pkg.appPath %>/assets/css/**/*.css'],
-        tasks: ['newer:cssmin'],
+      lessBootstrap: {
+        files: ['<%= pkg.appPath %>/assets/less/bootstrap/**/*.less'],
+        tasks: ['less'], // my own app-custom.less includes bootstrap variables
         options: {
-          livereload: true,
+          livereload: true
         }
       },
-      index: {
-        files: ['<%= pkg.appPath %>/index.html'],
-        tasks: ['copy:index'],
+      livereload: {
         options: {
-          livereload: true,
-        }
+          livereload: true
+        },
+        files: [
+          '<%= pkg.appPath %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+        ]
       }
     },
 
@@ -268,10 +314,10 @@ module.exports = function(grunt) {
     },
 
     connect: {
-      server: {
+      dev: {
         options: {
           port: 9001,
-          base: '<%= pkg.distPath %>'
+          base: ['<%= pkg.buildPathDev %>', '<%= pkg.appPath %>']
         }
       }
     },
@@ -279,36 +325,36 @@ module.exports = function(grunt) {
     nggettext_extract: {
       pot: {
         files: {
-          'po/template.pot': [
+          '<%= pkg.appPath %>/po/template.pot': [
             '<%= pkg.appPath %>/app/**/**.html',
             '<%= jshint.all.src[1] %>'
           ]
         }
-      },
+      }
     },
 
     nggettext_compile: {
       all: {
-           options: {
-               format: 'json'
-           },
-           files: [
-               {
-                   expand: true,
-                   dot: true,
-                   cwd: '<%= pkg.appPath %>/po',
-                   dest: '<%= pkg.distPath %>/js/i18n',
-                   src: ['*.po'],
-                   ext: '.json'
-               }
-           ]
-       }
+        options: {
+          format: 'json'
+        },
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= pkg.appPath %>/po',
+            src: ['*.po'],
+            dest: '<%= pkg.appPath %>/assets/js/i18n',
+            ext: '.json'
+          }
+        ]
+      }
     },
 
     ngconstant: {
       options: {
         name: 'app.config',
-        dest: '<%= pkg.buildPath %>/js/config.js'
+        dest: '<%= pkg.buildPathDev %>/js/config.js'
       },
       dist: {
         constants: '<%= pkg.appPath %>/app/shared/config/dist.config.json'
@@ -316,79 +362,124 @@ module.exports = function(grunt) {
       dev: {
         constants: '<%= pkg.appPath %>/app/shared/config/dev.config.json'
       }
+    },
+
+    useminPrepare: {
+      build: {
+        src: ['<%= pkg.buildPathDist %>/index.html'],
+        dest: '<%= pkg.buildPathDist %>'
+      },
+      options: {
+        flow: {
+          steps: { js: ['concat', 'uglifyjs'], css: ['concat', 'cssmin'] },
+          post: {
+            css: [{
+              name: 'concat',
+              createConfig: function(context) {
+                var generated = context.options.generated;
+                generated.options = {
+                  stripBanners: { block: true },
+                  separator: '\n'
+                };
+              }
+            }]
+          }
+        }
+      }
+    },
+
+    filerev: {
+      // waiting to test how to support image references inside compiled angular templates
+      // images: {
+      //   src: '<%= pkg.buildPathDist %>/images/**/*.{jpg,jpeg,gif,png,webp}',
+      //   dest: '<%= pkg.distPath %>/images/'
+      // },
+      css: {
+        src: '<%= pkg.distPath %>/styles/**/*.css'
+      },
+      js: {
+        src: '<%= pkg.distPath %>/scripts/**/*.js'
+      }
+    },
+
+    usemin: {
+      html: ['<%= pkg.distPath %>/index.html']
     }
 
   });
 
-  grunt.registerTask('default', [
+  grunt.registerTask('build', [
     'exec',
-    'clean',
-    'bower_concat',
-    'copy:index',
-    'copy:fontawesome',
-    'copy:images',
-    'ngconstant:dev',
+    'clean:build',
+    'wiredep',
+    'jscs:dev',
     'jshint',
     'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'uglify:bower',
-    'uglify:app',
-    'customize-bootstrap',
+    'customize-bootstrap:app',
     'less',
-    'cssmin',
     'nggettext_compile',
-    'karma'
+    'copy:dev_index',
+    'copy:dev_glyphicons',
+    'copy:dev_images',
+    'copy:dev_i18n_js'
   ]);
 
-  // not really the best dist task ever
+  grunt.registerTask('memento_test', function() {
+    grunt.log.writeln('\n\tI’m Commander Shepard, and this is my favourite memento on this terminal:'.blue.bold);
+    grunt.log.writeln('\n\tRemember to always run a "grunt test" before building a dist!\n'.yellow.bold);
+  });
+
   grunt.registerTask('dist', [
-    'exec',
-    'clean',
-    'bower_concat',
-    'copy:index',
-    'copy:fontawesome',
-    'copy:images',
+    'clean:dist',
+    'build',
     'ngconstant:dist',
-    'jshint',
-    'ngtemplates',
-    'concat',
+    'copy:dist_prepare',
+    'concat:dist',
     'ngAnnotate',
-    'uglify:bower',
-    'uglify:app',
-    'customize-bootstrap',
-    'less',
-    'cssmin',
-    'nggettext_compile',
-    'karma'
+    // 'karma',
+    'useminPrepare',
+    'concat:generated',
+    'cssmin:generated',
+    'uglify:generated',
+    'filerev',
+    'copy:dist_update_html',
+    'copy:dist_update_fonts',
+    'copy:dist_update_fontawesome',
+    'copy:dist_update_images',
+    'copy:dist_update_i18n',
+    'usemin',
+    'memento_test'
   ]);
 
   grunt.registerTask('dev', [
-    'exec',
-    'clean',
-    'bower_concat',
-    'copy:index',
-    'copy:fontawesome',
-    'copy:images',
+    'build',
     'ngconstant:dev',
-    'jshint',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'uglify:bower',
-    'uglify:app',
-    'customize-bootstrap',
-    'less',
-    'cssmin',
-    'nggettext_compile',
-    'connect',
+    'concat:dev',
+    'connect:dev',
     'karma',
     'watch'
   ]);
 
   grunt.registerTask('test', [
+    'jscs:dev',
     'jshint:test',
     'karma'
   ]);
+
+  grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
+    if (target === 'dist') {
+      return grunt.log.warn('The `serve:dist` target is currently unavailable.\nUse `grunt dist` to build a new dist into the `dist` folder, then serve it as you prefer.');
+      // return grunt.task.run(['build', 'connect:dist:keepalive']);
+    }
+
+    grunt.task.run([
+      'dev'
+    ]);
+  });
+
+  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
+    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+    grunt.task.run(['serve:' + target]);
+  });
 
 };
