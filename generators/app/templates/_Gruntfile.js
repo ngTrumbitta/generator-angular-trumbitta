@@ -270,7 +270,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= jshint.all.src[1] %>'],
-        tasks: ['newer:jscs:dev', 'newer:jshint:all', 'newer:concat:dev', 'newer:jshint:test', 'karma'],
+        tasks: ['newer:jscs:dev', 'newer:jshint:all', 'newer:concat:dev', 'newer:jshint:test', 'karma', 'ngdocs'],
         options: {
           livereload: true
         }
@@ -473,7 +473,8 @@ module.exports = function(grunt) {
     'ngconstant:dev',
     'concat:dev',
     'connect:dev',
-    'karma',
+    'karma',    
+    'ngdocs',
     'watch'
   ]);
 
@@ -498,5 +499,7 @@ module.exports = function(grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
   });
+  
+  grunt.registerTask('docs', 'Generate the documentation in dist/docs.', ['ngdocs']);
 
 };
