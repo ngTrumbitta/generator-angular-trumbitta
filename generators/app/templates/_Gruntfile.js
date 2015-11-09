@@ -404,6 +404,23 @@ module.exports = function(grunt) {
 
     usemin: {
       html: ['<%= pkg.distPath %>/index.html']
+    },
+    
+    ngdocs: {
+      options: {
+        dest: 'dist/docs',
+        scripts: [
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js'
+        ],
+        title: 'App Documentation',
+        html5Mode: false,
+        startPage: '/api/app'
+      },
+      api: {
+        src: ['app/**/*.js'],
+        title: 'Reference'
+      }
     }
 
   });
