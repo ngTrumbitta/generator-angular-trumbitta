@@ -1,3 +1,18 @@
+/**
+  * @ngdoc overview
+  * @name app
+  * @module app
+  * @requires app.config
+  * 
+  * @description
+  * ## App
+  * This is angular app has been generated with `generator-angular-trumbitta`
+  * 
+  * App does this:
+  * * thing1
+  * * thing2
+  * 
+*/
 angular
   .module('app', [
     'app.config',
@@ -19,3 +34,48 @@ angular
     // gettextCatalog.debug = true;
     // gettextCatalog.showTranslatedMarkers = true;
   });
+
+
+/**
+  * @ngdoc object
+  * @name app.controllers
+  * @module app
+  * @description
+  *
+  * It is a logic container.
+  *
+  * All the controllers of the apps belong to this package.
+**/
+
+/**
+  * @ngdoc object
+  * @name app.directives
+  * @module app
+  * @description
+  *
+  * It is a logic container.
+  *
+  * All the directives of the apps belong to this package.
+**/
+
+/**
+  * @ngdoc object
+  * @name app.factories
+  * @module app
+  * @description
+  *
+  * It is a logic container.
+  *
+  * All the factories of the apps belong to this package.
+**/
+
+/**
+  * @ngdoc object
+  * @name app.services
+  * @module app
+  * @description
+  *
+  * It is a logic container.
+  *
+  * All the services of the apps belong to this package.
+**/
