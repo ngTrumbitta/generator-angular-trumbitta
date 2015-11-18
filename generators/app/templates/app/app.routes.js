@@ -3,9 +3,6 @@
   * @name app.routes
   * @module app
   * @requires app.controllers.home
-  * @requires app.controllers.tube
-  * @requires app.controllers.supplierList
-  * @requires app.controllers.supplier
   *
   * @description
   * This module configure the `ui-router` with the states.
