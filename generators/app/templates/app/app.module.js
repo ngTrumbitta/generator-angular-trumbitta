@@ -3,15 +3,15 @@
   * @name app
   * @module app
   * @requires app.config
-  * 
+  *
   * @description
   * ## App
   * This is angular app has been generated with `generator-angular-trumbitta`
-  * 
+  *
   * App does this:
   * * thing1
   * * thing2
-  * 
+  *
 */
 angular
   .module('app', [

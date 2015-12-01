@@ -270,7 +270,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= jshint.all.src[1] %>'],
-        tasks: ['newer:jscs:dev', 'newer:jshint:all', 'newer:concat:dev', 'newer:jshint:test', 'karma'],
+        tasks: ['newer:jscs:dev', 'newer:jshint:all', 'newer:concat:dev', 'newer:jshint:test', 'karma', 'ngdocs'],
         options: {
           livereload: true
         }
@@ -404,6 +404,23 @@ module.exports = function(grunt) {
 
     usemin: {
       html: ['<%= pkg.distPath %>/index.html']
+    },
+
+    ngdocs: {
+      options: {
+        dest: 'dist/docs',
+        scripts: [
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js'
+        ],
+        title: 'App Documentation',
+        html5Mode: false,
+        startPage: '/api/app'
+      },
+      api: {
+        src: ['app/**/*.js'],
+        title: 'Reference'
+      }
     }
 
   });
@@ -457,6 +474,7 @@ module.exports = function(grunt) {
     'concat:dev',
     'connect:dev',
     'karma',
+    'ngdocs',
     'watch'
   ]);
 
@@ -481,5 +499,7 @@ module.exports = function(grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
   });
+
+  grunt.registerTask('docs', 'Generate the documentation in dist/docs.', ['ngdocs']);
 
 };

@@ -1,3 +1,17 @@
+/**
+  * @ngdoc object
+  * @name app.routes
+  * @module app
+  * @requires app.controllers.home
+  *
+  * @description
+  * This module configure the `ui-router` with the states.
+  *
+  * The configured states are:
+  * - home
+  *
+**/
+
 angular
   .module('app.routes', [
     'ui.router',

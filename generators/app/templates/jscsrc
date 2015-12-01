@@ -36,7 +36,6 @@
   "requireSpacesInFunction": {
     "beforeOpeningCurlyBrace": true
   },
-  "validateLineBreaks": "LF",
   "validateParameterSeparator": ", ",
   "validateIndentation": 2
 }
