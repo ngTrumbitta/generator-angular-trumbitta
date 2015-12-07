@@ -79,3 +79,14 @@ angular
   *
   * All the services of the apps belong to this package.
 **/
+
+/**
+  * @ngdoc object
+  * @name app.filters
+  * @module app
+  * @description
+  *
+  * It is a logic container.
+  *
+  * All the filters of the apps belong to this package.
+**/
