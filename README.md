@@ -7,8 +7,13 @@
 	- [Install](#install)
 	- [Use the generator](#use-the-generator)
 	- [Use the generated application](#use-the-generated-application)
+		- [TL;DR](#tldr)
+		- [Directory layout](#directory-layout)
+			- [Notable entries](#notable-entries)
 		- [Development](#development)
 			- [Naming conventions](#naming-conventions)
+			- [Adding new libraries](#adding-new-libraries)
+			- [Adding new source files](#adding-new-source-files)
 		- [Testing](#testing)
 		- [Production](#production)
 		- [Grunt tasks](#grunt-tasks)
@@ -26,6 +31,7 @@ These opinions of mine cover various aspects like –but not limited to:
 
 * Directory layout
 * Naming conventions
+* Grunt over Gulp, Less over SASS
 * When to use a service or a factory
 * The minimum usually required Bower packages
 * How to separate a development workflow from a production build
@@ -99,9 +105,77 @@ Hit `CTRL C` if you want to stop it.
 
 ## Use the generated application
 
+### TL;DR
+
+1. `grunt serve`
+2. Hack away while grunt watches for changes together with LiveReload
+3. `grunt dist` when you are ready to deploy
+
+*Or*, you could keep on reading and get some useful insights on how this whole thing actually works.
+
+### Directory layout
+
+A freshly created app will sport this directory layout:
+
+```
+.
+├── .bowerrc
+├── .editorconfig
+├── .jscsrc
+├── .jshintignore
+├── .jshintrc
+├── .npmignore
+├── Gruntfile.js
+├── README.md
+├── app
+│   ├── app.module.js
+│   ├── app.routes.js
+│   ├── components
+│   │   └── home
+│   │       ├── home.controller.js
+│   │       ├── home.controller.spec.js
+│   │       └── home.template.html
+│   └── shared
+│       └── config
+│           ├── dev.config.json
+│           ├── dist.config.json
+│           └── karma.config.js
+├── assets
+│   ├── images
+│   │   └── README.md
+│   ├── js
+│   │   └── README.md
+│   └── less
+│       ├── app-custom.less
+│       └── bootstrap
+│           └── overrides
+│               ├── README.md
+│               └── variables.less
+├── bower.json
+├── dist
+│   └── docs
+├── index.html
+└── package.json
+```
+
+#### Notable entries
+
+* Linting / coding style support with JSHint, JSCS, and EditorConfig config files
+* Source files for your app resides inside `app`. There you can find two main files, `app.module.js` and `app.routes.js`, and two main directories: `components` and `shared`.
+  * `app.module.js` is for the main app module (you don't say), and for any *run* or *config* block you may need.
+  * `app.routes.js` is where you configure `ui.router` routes, interceptors, and so on
+  * `components` is the directory where you put source files of things that can be organized in logical blocks a.k.a. *components*. One sample block, `home`, comes with the generator and as you can see it contains every part of the `home` component: a controller, a controller spec file for unit testing, and a template.
+  * `shared` is where you put source files of things you plan to reuse on application-wide basis. Some custom directives, filters, general purpose services (e.g. a pagination service) usually reside here.  
+  In `shared/config`, besides the configuration file for the Karma test runner, you'll find two configuration files for your app.
+* `assets` contains assets like images and Less files. Customize your Bootstrap build by editing `assets/less/bootstrap/overrides`, organize your custom Less classes and imports using `assets/less/app-custom.less` as a starting point.
+
 ### Development
 
 #### Naming conventions
+
+#### Adding new libraries
+
+#### Adding new source files
 
 ### Testing
 
@@ -110,6 +184,12 @@ Hit `CTRL C` if you want to stop it.
 ### Grunt tasks
 
 ### Configuration
+
+**TO BE EXPANDED**
+
+`dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist`).  
+They are but stubs, samples. You are free to organize and expand them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
+Example: `var myRESTBackend = ENV.BACKEND.URL.FULL;`
 
 ## Compatible packages
 
