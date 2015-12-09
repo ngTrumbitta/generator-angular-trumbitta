@@ -12,6 +12,8 @@
 			- [Notable entries](#notable-entries)
 		- [Development](#development)
 			- [Naming conventions](#naming-conventions)
+				- [Files](#files)
+				- [Modules](#modules)
 			- [Adding new libraries](#adding-new-libraries)
 			- [Adding new source files](#adding-new-source-files)
 		- [Testing](#testing)
@@ -101,7 +103,7 @@ grunt serve
 
 Then point your browser at `http://localhost:9100` just to be greeted by the underwhelming *Hello world* default page.
 
-Hit `CTRL C` if you want to stop it.
+Hit `ctrl c` if you want to stop it.
 
 ## Use the generated application
 
@@ -171,7 +173,102 @@ A freshly created app will sport this directory layout:
 
 ### Development
 
+The generated app is ready for TDD. Here's a typical development cycle:
+
+1. `grunt serve`
+2. (If working on feature requiring JS code) Create / edit a spec file, the watcher launches the test suite, sends a LiveReload message, then keeps watching for modifications
+3. Create / edit a JS / Less / HTML template file, the watcher does its thing again
+4. Repeat 2. and 3. ad libitum
+5. `ctrl c` to stop the *{watch|serv}er*
+
+**Caveat:** the watcher doesn't react to newly created files, meaning you'll have to manually stop and restart the cycle for it to start watching over new files.
+
 #### Naming conventions
+
+The Gruntfile and Karma config expect you to follow some naming conventions.
+
+##### Files
+
+* `xyz.controller.js` for controllers
+* `xyz.factory.js` for factories
+* `xyz.service.js` for services
+* and so on for *filters*, *directives*, *interceptors*, etc
+* `xyz.{controller|factory|service|filter|...}.spec.js` for spec files
+* `xyz.template.html` for templates
+
+**Example: a component**  
+```
+app
+└── components
+    └── home
+        ├── home.controller.js
+        ├── home.controller.spec.js
+        └── home.template.html
+```
+
+**Example: a custom directive**  
+```
+app
+└── shared
+    └── directives
+        └── my-custom-directive
+            ├── my-custom-directive.directive.js
+            ├── my-custom-directive.directive.spec.js
+            └── my-custom-directive.directive.template.html
+```
+
+##### Modules
+
+Every controller, factory, etc should be kept into its own module. Such module should:
+* Start with `app`
+* Continue with a proper plural group (e.g. `controllers`, `filters`, `services`, and so on)
+* Be all lowercase
+
+**Example: a controller**  
+```js
+angular.module('app.controllers.home', [])
+
+	.controller('homeController', function() {
+	  // stuff
+	});
+```
+
+**Example: a service**  
+```js
+angular.module('app.services.batman', [])
+
+  .service('batmanService', function() {
+		// stuff
+	});
+```
+
+Modules can be then injected as needed.
+
+**Example: a controller depending on a service**  
+```js
+angular.module('app.controllers.mycontroller', [
+  'app.services.batman'
+  ])
+
+  .controller('myController', function(batmanService) {
+		// stuff
+	});
+```
+
+##### Everything except directives
+
+Be clear, not concise. Use the *type of Angular thing* in the thing's name (but not in the thing's module name).
+
+* `someController`, `app.controllers.some`
+* `oneSpecialService`, `app.services.onespecial`
+* `heyLookAThreeHeadedFactory`, `app.factories.heylookathreeheaded`
+* ...
+
+##### Directives
+
+Directives are, IIRC, the only *Angular thing* without their type in their name.
+
+**Example**: `myCrazyProgressBar`, `app.directives.mycrazyprogressbar`
 
 #### Adding new libraries
 
