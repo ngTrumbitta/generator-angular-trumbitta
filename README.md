@@ -306,6 +306,21 @@ ngDoc is a recent addition. **TODO description.**
 
 ### Testing
 
+As you may already know if you read about [naming conventions](#naming-conventions) up there, spec files should be created beside the source file they are related to.
+
+**Example: spec file for a controller**  
+```
+app
+└── components
+    └── home
+        ├── home.controller.js
+        ├── home.controller.spec.js
+```
+
+Unit tests get executed by the watcher whenever needed. There's also a `grunt test` task, just in case.
+
+You'll find a test coverage report in `tmp/coverage`.
+
 ### Production
 
 ### Grunt tasks
