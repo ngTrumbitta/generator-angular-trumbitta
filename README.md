@@ -219,7 +219,7 @@ app
 
 ##### Modules
 
-Every controller, factory, etc should be kept into its own module. Such module should:
+Every controller, factory, etc. should be kept into its own module. Such module should:
 * Start with `app`
 * Continue with a proper plural group (e.g. `controllers`, `filters`, `services`, and so on)
 * Be all lowercase
