@@ -272,7 +272,37 @@ Directives are, IIRC, the only *Angular thing* without their type in their name.
 
 #### Adding new libraries
 
-#### Adding new source files
+Third-party libraries / packages / modules are supposed to come from Bower or npm. I didn't need anything else so far.
+
+##### Adding a Bower component
+
+* `ctrl c` to stop the *{serve|watch}er*
+* `bower install --save <the-component>` or edit `bower.json` to install the component
+* `grunt serve` to restart the *{serve|watch}er*
+
+Wiredep will perform its magic and update `index.html` for you, adding proper pointers to the new `.js` and / or `.css` files.
+
+##### Adding a node package
+
+* `ctrl c` to stop the *{serve|watch}er*
+* `npm install --save <the-package>` or edit `package.json` to install the component
+* Edit `index.html` to manually add proper pointers to the new files, but stay away from the Wiredep and Usemin blocks. They are marked by comments like these:  
+```html
+<!-- build:css(.) styles/vendor.css -->
+<!-- bower:css -->
+```
+* `grunt serve` to restart the *{serve|watch}er*
+
+BTW, I consider a best practice to use Bower for libraries needed by the application you are developing, and npm for libraries needed by Grunt or any other *infrastructural* tool you might want to use.
+
+#### Subgenerators for factories, services, filters, everything
+
+I have a bunch of those already planned, and I'm going to add them one day or another (see issues on GitHub).  
+If you feel like helping, just let me know in the issues and I'll provide an example to be transformed into a subgenerator.
+
+### Documenting
+
+ngDoc is a recent addition. **TODO description.**
 
 ### Testing
 
