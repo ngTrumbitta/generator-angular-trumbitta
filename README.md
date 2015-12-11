@@ -1,6 +1,6 @@
 # Enterprise Angular Yeoman Generator
 
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depth:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Enterprise Angular Yeoman Generator](#enterprise-angular-yeoman-generator)
 	- [Prerequisites](#prerequisites)
@@ -9,22 +9,7 @@
 	- [Use the generated application](#use-the-generated-application)
 		- [TL;DR](#tldr)
 		- [Directory layout](#directory-layout)
-			- [Notable entries](#notable-entries)
 		- [Development](#development)
-			- [Naming conventions](#naming-conventions)
-				- [Files](#files)
-				- [Modules](#modules)
-				- [Everything except directives](#everything-except-directives)
-				- [Directives](#directives)
-			- [Adding new libraries](#adding-new-libraries)
-				- [Adding a Bower component](#adding-a-bower-component)
-				- [Adding a node package](#adding-a-node-package)
-			- [Subgenerators for factories, services, filters, everything](#subgenerators-for-factories-services-filters-everything)
-			- [i18n](#i18n)
-				- [How it works](#how-it-works)
-				- [How to create to-be-translated strings](#how-to-create-to-be-translated-strings)
-				- [How to translate strings](#how-to-translate-strings)
-				- [How to import translated strings back into the Angular app](#how-to-import-translated-strings-back-into-the-angular-app)
 		- [Documenting](#documenting)
 		- [Testing](#testing)
 		- [Production](#production)
