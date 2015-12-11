@@ -14,8 +14,18 @@
 			- [Naming conventions](#naming-conventions)
 				- [Files](#files)
 				- [Modules](#modules)
+				- [Everything except directives](#everything-except-directives)
+				- [Directives](#directives)
 			- [Adding new libraries](#adding-new-libraries)
-			- [Adding new source files](#adding-new-source-files)
+				- [Adding a Bower component](#adding-a-bower-component)
+				- [Adding a node package](#adding-a-node-package)
+			- [Subgenerators for factories, services, filters, everything](#subgenerators-for-factories-services-filters-everything)
+			- [i18n](#i18n)
+				- [How it works](#how-it-works)
+				- [How to create to-be-translated strings](#how-to-create-to-be-translated-strings)
+				- [How to translate strings](#how-to-translate-strings)
+				- [How to import translated strings back into the Angular app](#how-to-import-translated-strings-back-into-the-angular-app)
+		- [Documenting](#documenting)
 		- [Testing](#testing)
 		- [Production](#production)
 		- [Grunt tasks](#grunt-tasks)
@@ -299,6 +309,68 @@ BTW, I consider a best practice to use Bower for libraries needed by the applica
 
 I have a bunch of those already planned, and I'm going to add them one day or another (see issues on GitHub).  
 If you feel like helping, just let me know in the issues and I'll provide an example to be transformed into a subgenerator.
+
+#### i18n
+
+The generated app has a good enough support for your i18n needs, by using the way more than good enough [angular-gettext](https://angular-gettext.rocketeer.be/).
+
+##### How it works
+
+Look at this code snippet from `app.module.js`:
+
+```js
+var lang = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
+lang = lang.substring(0,2);
+
+gettextCatalog.setCurrentLanguage(lang);
+gettextCatalog.loadRemote(ENV.I18N.BASE_URL + lang + '.json');
+//
+// Useful for debugging:
+//
+// gettextCatalog.debug = true;
+// gettextCatalog.showTranslatedMarkers = true;
+```
+
+The `lang` variable gets its value from the current language of your browser (usally found under *settings / content* or something like that), and it's a two-characters language code (e.g. `en` for English, `it` for Italian).
+
+That is then used to configure the `gettextCatalog` and make it load the right JSON file containing all your translated strings.
+
+##### How to create to-be-translated strings
+
+First you have to mark some strings so that angular-gettext will be able to recognize, extract, and put them inside gettext files.  
+The best way to learn how to do this, is to [read about it in the official docs for angular-gettext](https://angular-gettext.rocketeer.be/dev-guide/annotate/).
+
+Once you have some strings marked, stop the *{watch|serv}er* and launch `grunt nggettext_extract` to extract the strings from your code and populate –or update– the gettext files in the `po` directory.
+
+##### How to translate strings
+
+Then it becomes a matter of working with gettext. What *I* do is:
+
+1. Extract the strings as explained above
+Open the amazing [Poedit](https://poedit.net/)
+2. If it's the first time I'm translating a given application in a given language:
+  * Choose `Create a new translation`
+  * Choose the `po/template.pot` gettext catalog
+  * Choose the language (e.g. English)
+  * Translate away and save inside `po` with the suggested filename (which is that two-characters code we saw above in [How it works](#how-it-works))
+3. If I'm adding strings to a translation I already have:
+	* Choose `Edit a translation`
+	* Choose the `po/<two-characters code>.po` file you want to edit (leave the `.mo` ones alone)
+	* This is important: choose **Catalog / Update from POT File... from the application menu**
+	* Choose the `po/template.pot` catalog file
+	* Translate away and save over the existing `.po` file
+
+This will take care of the gettext part.
+
+##### How to import translated strings back into the Angular app
+
+You'll now have to import back the updated gettext files inside your app.
+
+Well, there's a Grunt task for that: `grunt nggettext_compile`.  
+But even better, you don't really have to manually execute it, because both `grunt serve` (you already know about it) and `grunt dist` (keep on reading for this one, or jump to [Production](#production)) take care of it.
+
+Just go on as usual –for example with a `grunt serve`.  
+`nggettext_compile` will also be executed, JSON files will be created or updated, and the application will load them at the next manual page refresh (LiveReload doesn't apply here).
 
 ### Documenting
 
