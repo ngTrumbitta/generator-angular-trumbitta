@@ -408,4 +408,4 @@ to:
 
 ## License
 
-MIT – see [license](LICENCE) file.
+MIT – see [license](LICENSE) file.
