@@ -402,17 +402,20 @@ Task               |What it's for
 
 ### Configuration
 
-**TO BE EXPANDED**
+**TO BE EXPANDED – help wanted**
 
 `dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist`).  
 They are but stubs, samples. You are free to organize and expand them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
-Example: `var myRESTBackend = ENV.BACKEND.URL.FULL;`
+**Example:** `var myRESTBackend = ENV.BACKEND.URL.FULL;`
 
 ## Compatible packages
 
+I started to open source some packages I, for one, find useful in my work.  
+They are a small but growing bunch of services, directives, etc, following the same opinionated practices and conventions you were so kind and patient to read about in this very guide.
+
 ## Known issues
 
-Until issue #12 gets fixed, you'll have to edit the `bower.json` of the generated app and change the version for the Bootstrap component from:
+Until issue #12 gets fixed, to avoid an ugly blocking error at build time, you'll have to edit the `bower.json` of the generated app and change the version for the Bootstrap component from:
 
 ```
 "bootstrap": "^3.3.4",
@@ -423,6 +426,8 @@ to:
 ```
 "bootstrap": "3.3.4",
 ```
+
+Once issue #12 is fixed, Bootstrap will also be updated to the last available 3.x version.
 
 ## License
 
