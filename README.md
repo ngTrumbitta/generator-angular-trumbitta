@@ -391,6 +391,15 @@ For the moment, you'll have to copy the generated –or updated– `dist` direct
 
 ### Grunt tasks
 
+Here's a list of the most useful grunt tasks at your disposal. The omitted ones are *internal* and *helper* tasks that you are not supposed to ever need using.
+
+Task               |What it's for
+-------------------|-------------
+`serve`            |Builds and serves the development version of the app on port 9001, and watches for changes in the source files
+`dist`             |Builds the production version of the app
+`nggettext_extract`|Extracts the i18n strings you chose by annotating source files, and saves them into gettext files ready to be translated
+`test`             |Executes unit tests
+
 ### Configuration
 
 **TO BE EXPANDED**
