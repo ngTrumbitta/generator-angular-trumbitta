@@ -380,6 +380,15 @@ You'll find a test coverage report in `tmp/coverage`.
 
 ### Production
 
+Once you are ready for a deploy or a release, it's time to *build a dist*.
+
+* Check the *dist* version of your app's configuration in `app/shared/config/dist.config.json`
+* Launch `grunt dist`
+
+Sometime in the future, once issue #15 will be fixed, you could instead create a zipped package of a dist with something like `grunt package`.
+
+For the moment, you'll have to copy the generated –or updated– `dist` directory and use it as you most like.
+
 ### Grunt tasks
 
 ### Configuration
