@@ -380,21 +380,42 @@ You'll find a test coverage report in `tmp/coverage`.
 
 ### Production
 
+Once you are ready for a deploy or a release, it's time to *build a dist*.
+
+* Check the *dist* version of your app's configuration in `app/shared/config/dist.config.json`
+* Launch `grunt dist`
+
+Sometime in the future, once issue #15 will be fixed, you could instead create a zipped package of a dist with something like `grunt package`.
+
+For the moment, you'll have to copy the generated –or updated– `dist` directory and use it as you most like.
+
 ### Grunt tasks
+
+Here's a list of the most useful grunt tasks at your disposal. The omitted ones are *internal* and *helper* tasks that you are not supposed to ever need using.
+
+Task               |What it's for
+-------------------|-------------
+`serve`            |Builds and serves the development version of the app on port 9001, and watches for changes in the source files
+`dist`             |Builds the production version of the app
+`nggettext_extract`|Extracts the i18n strings you chose by annotating source files, and saves them into gettext files ready to be translated
+`test`             |Executes unit tests
 
 ### Configuration
 
-**TO BE EXPANDED**
+**TO BE EXPANDED – help wanted**
 
 `dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist`).  
 They are but stubs, samples. You are free to organize and expand them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
-Example: `var myRESTBackend = ENV.BACKEND.URL.FULL;`
+**Example:** `var myRESTBackend = ENV.BACKEND.URL.FULL;`
 
 ## Compatible packages
 
+I started to open source some packages I, for one, find useful in my work.  
+They are a small but growing bunch of services, directives, etc, following the same opinionated practices and conventions you were so kind and patient to read about in this very guide.
+
 ## Known issues
 
-Until issue #12 gets fixed, you'll have to edit the `bower.json` of the generated app and change the version for the Bootstrap component from:
+Until issue #12 gets fixed, to avoid an ugly blocking error at build time, you'll have to edit the `bower.json` of the generated app and change the version for the Bootstrap component from:
 
 ```
 "bootstrap": "^3.3.4",
@@ -405,6 +426,8 @@ to:
 ```
 "bootstrap": "3.3.4",
 ```
+
+Once issue #12 is fixed, Bootstrap will also be updated to the last available 3.x version.
 
 ## License
 
