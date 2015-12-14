@@ -27,6 +27,8 @@
     "beforeEach": false,
     "browser": false,
     "describe": false,
+    "fdescribe": false,
+    "xdescribe": false,
     "expect": false,
     "inject": false,
     "it": false,
@@ -35,4 +37,3 @@
     "waitsFor": false
   }
 }
-
