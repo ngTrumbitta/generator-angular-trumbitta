@@ -6,7 +6,7 @@
 	- [Prerequisites](#prerequisites)
 	- [Install](#install)
 	- [Use the generator](#use-the-generator)
-		- [Sub-generators](#subgenerators)
+		- [Sub-generators](#sub-generators)
 	- [Use the generated application](#use-the-generated-application)
 		- [TL;DR](#tldr)
 		- [Directory layout](#directory-layout)
