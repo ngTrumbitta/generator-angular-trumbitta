@@ -6,6 +6,7 @@
 	- [Prerequisites](#prerequisites)
 	- [Install](#install)
 	- [Use the generator](#use-the-generator)
+		- [Sub-generators](#subgenerators)
 	- [Use the generated application](#use-the-generated-application)
 		- [TL;DR](#tldr)
 		- [Directory layout](#directory-layout)
@@ -99,6 +100,18 @@ grunt serve
 Then point your browser at `http://localhost:9100` just to be greeted by the underwhelming *Hello world* default page.
 
 Hit `ctrl c` if you want to stop it.
+
+### Sub-generators
+
+#### resourceFactory
+
+A resource factory is a factory whose only purpose is to let you access a REST entry point / URL.
+
+Go where you want the new resource factory to be created, then:
+
+`$ yo angular-trumbitta:resourceFactory myFactoryName`
+
+The factory name argument is optional. If it's not supplied, Yeoman will ask you for it.
 
 ## Use the generated application
 
