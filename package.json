@@ -10,6 +10,9 @@
     "email": "trumbitta@gmail.com",
     "url": "http://www.williamghelfi.com/"
   },
+  "contributors": [
+    "Andrea Dessì <nkjoep@gmail.com>"
+  ],
   "scripts": {
     "test": "mocha"
   },
