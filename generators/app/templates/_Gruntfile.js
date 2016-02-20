@@ -8,6 +8,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
+    buildVersion: '<%= pkg.name %>_v<%= pkg.version %>_<%= grunt.template.today("yyyymmdd.HHMM") %>',
 
     exec: {
       bower_install: 'bower cache clean --config.interactive=false && bower install --config.interactive=false'
@@ -71,8 +72,7 @@ module.exports = function(grunt) {
     clean: {
       build: {
         src: [
-          '<%= pkg.buildPathDev %>/**/*',
-          '<%= pkg.buildPathDist %>/**/*'
+          '<%= pkg.buildPath %>/**'
         ]
       },
       dist: {
@@ -178,6 +178,12 @@ module.exports = function(grunt) {
         cwd: '<%= pkg.appPath %>/assets/js',
         src: 'i18n/**',
         dest: '<%= pkg.distPath %>/'
+      },
+      dist_package_prepare: {
+        expand: true,
+        cwd: '<%= pkg.distPath %>',
+        src: '**/**',
+        dest: '<%= pkg.buildPath %>/<%= buildVersion %>'
       }
     },
 
@@ -407,6 +413,23 @@ module.exports = function(grunt) {
       html: ['<%= pkg.distPath %>/index.html']
     },
 
+    compress: {
+      dist_package: {
+        options: {
+          archive: '<%= pkg.buildPath %>/<%= buildVersion %>.tar.gz',
+          mode: 'tgz',
+          pretty: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: '<%= pkg.buildPath %>',
+            src: '<%= buildVersion %>/**'
+          }
+        ]
+      }
+    },
+
     ngdocs: {
       options: {
         dest: 'dist/docs',
@@ -467,6 +490,12 @@ module.exports = function(grunt) {
     'copy:dist_update_i18n',
     'usemin',
     'memento_test'
+  ]);
+
+  grunt.registerTask('dist-package', [
+    'dist',
+    'copy:dist_package_prepare',
+    'compress:dist_package'
   ]);
 
   grunt.registerTask('dev', [
