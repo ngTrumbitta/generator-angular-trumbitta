@@ -327,6 +327,7 @@ module.exports = function(grunt) {
         files: {
           '<%= pkg.appPath %>/po/template.pot': [
             '<%= pkg.appPath %>/app/**/**.html',
+            '<%= pkg.appPath %>/index.html',
             '<%= jshint.all.src[1] %>'
           ]
         }
