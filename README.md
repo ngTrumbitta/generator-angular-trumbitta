@@ -119,7 +119,7 @@ The factory name argument is optional. If it's not supplied, Yeoman will ask you
 
 1. `grunt serve`
 2. Hack away while grunt watches for changes together with LiveReload
-3. `grunt dist` when you are ready to deploy
+3. `grunt dist` (Or `grunt dist-package` to create a packaged build in `tmp/build`) when you are ready to deploy
 
 *Or*, you could keep on reading and get some useful insights on how this whole thing actually works.
 
@@ -365,7 +365,7 @@ This will take care of the gettext part.
 You'll now have to import back the updated gettext files inside your app.
 
 Well, there's a Grunt task for that: `grunt nggettext_compile`.  
-But even better, you don't really have to manually execute it, because both `grunt serve` (you already know about it) and `grunt dist` (keep on reading for this one, or jump to [Production](#production)) take care of it.
+But even better, you don't really have to manually execute it, because both `grunt serve` (you already know about it) and `grunt dist` / `grunt dist-package` (keep on reading for these two, or jump to [Production](#production)) take care of it.
 
 Just go on as usual –for example with a `grunt serve`.  
 `nggettext_compile` will also be executed, JSON files will be created or updated, and the application will load them at the next manual page refresh (LiveReload doesn't apply here).
@@ -398,9 +398,9 @@ Once you are ready for a deploy or a release, it's time to *build a dist*.
 * Check the *dist* version of your app's configuration in `app/shared/config/dist.config.json`
 * Launch `grunt dist`
 
-Sometime in the future, once issue #15 will be fixed, you could instead create a zipped package of a dist with something like `grunt package`.
+Then copy the generated –or updated– `dist` directory and use it as you most like.
 
-For the moment, you'll have to copy the generated –or updated– `dist` directory and use it as you most like.
+Or run `grunt dist-package` to create a packaged build in `tmp/build`.
 
 ### Grunt tasks
 
@@ -410,6 +410,7 @@ Task               |What it's for
 -------------------|-------------
 `serve`            |Builds and serves the development version of the app on port 9001, and watches for changes in the source files
 `dist`             |Builds the production version of the app
+`dist-package`     |Creates a packaged build in `tmp/build`
 `nggettext_extract`|Extracts the i18n strings you chose by annotating source files, and saves them into gettext files ready to be translated
 `test`             |Executes unit tests
 
@@ -417,7 +418,7 @@ Task               |What it's for
 
 **TO BE EXPANDED – help wanted**
 
-`dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist`).  
+`dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist` and `grunt dist-package`).  
 They are but stubs, samples. You are free to organize and expand them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
 **Example:** `var myRESTBackend = ENV.BACKEND.URL.FULL;`
 

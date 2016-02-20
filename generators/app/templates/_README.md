@@ -25,4 +25,5 @@ URL is [http://localhost:9001](http://localhost:9001).
 
 ## In production
 
-Run `grunt dist` and grab the content of the `dist` directory.
+Run `grunt dist` and grab the content of the `dist` directory.  
+Or run `grunt dist-package` to create a packaged build in `tmp/build`.
