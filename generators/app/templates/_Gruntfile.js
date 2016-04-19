@@ -299,7 +299,10 @@ module.exports = function(grunt) {
         }
       },
       lessApp: {
-        files: ['<%= pkg.appPath %>/assets/less/*.less'],
+        files: [
+          '<%= pkg.appPath %>/assets/less/*.less',
+          '<%= pkg.appPath %>/assets/less/imports/*.less'
+        ],
         tasks: ['lesslint', 'less:app'],
         options: {
           livereload: true
