@@ -80,7 +80,7 @@ module.exports = function(grunt) {
         '<%= pkg.distPath %>/**/*'
         ]
       }
-    }, // Ugly fix
+    },
 
     jshint: {
       all: {
