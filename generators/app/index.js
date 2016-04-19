@@ -102,6 +102,10 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('.editorconfig')
     );
     this.fs.copy(
+      this.templatePath('csslintrc'),
+      this.destinationPath('.csslintrc')
+    );    
+    this.fs.copy(
       this.templatePath('jscsrc'),
       this.destinationPath('.jscsrc')
     );
