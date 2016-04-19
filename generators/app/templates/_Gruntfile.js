@@ -90,7 +90,7 @@ module.exports = function(grunt) {
           csslintrc: '<%= pkg.appPath %>/.csslintrc'
         }
       }
-    },    
+    },
 
     jshint: {
       all: {
