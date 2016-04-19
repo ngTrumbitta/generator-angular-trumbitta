@@ -82,6 +82,16 @@ module.exports = function(grunt) {
       }
     },
 
+    lesslint: {
+      src: ['<%= pkg.appPath %>/assets/less/app-custom.less'],
+      imports: ['<%= pkg.appPath %>/assets/less/imports/**/*.less'],
+      options: {
+        csslint: {
+          csslintrc: '<%= pkg.appPath %>/.csslintrc'
+        }
+      }
+    },    
+
     jshint: {
       all: {
         // define the files to lint
@@ -290,14 +300,14 @@ module.exports = function(grunt) {
       },
       lessApp: {
         files: ['<%= pkg.appPath %>/assets/less/*.less'],
-        tasks: ['less:app'],
+        tasks: ['lesslint', 'less:app'],
         options: {
           livereload: true
         }
       },
       lessBootstrap: {
         files: ['<%= pkg.appPath %>/assets/less/bootstrap/**/*.less'],
-        tasks: ['less'], // my own app-custom.less includes bootstrap variables
+        tasks: ['lesslint', 'less'], // my own app-custom.less includes bootstrap variables
         options: {
           livereload: true
         }
@@ -457,6 +467,7 @@ module.exports = function(grunt) {
     'jshint',
     'ngtemplates',
     'customize-bootstrap:app',
+    'lesslint',
     'less',
     'nggettext_compile',
     'copy:dev_index',
