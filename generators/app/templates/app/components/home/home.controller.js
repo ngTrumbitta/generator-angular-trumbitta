@@ -7,24 +7,22 @@
   * Provides the {@link app.controllers.home.homeController homeController}
   *
 **/
-angular.module('app.controllers.home', [])
-
-/**
-  * @ngdoc controller
-  * @name app.controllers.home.homeController
-  * @description
-  *
-  * Handles the main page of app. See {@link app.routes the routes.}
-  *
-**/
-.controller('homeController', function() {
-
+(function() {
   'use strict';
 
-  var vm = this,
-      greetingStart = 'Hello';
+  angular.module('app.controllers.home', [])
+  .controller('homeController', HomeController);
 
-  vm.name = 'World!';
-  vm.greeting = greetingStart + ' ' + vm.name;
+  function HomeController() {
+    var vm = this,
+        greetingStart = 'Hello';
 
-});
+    activate();
+
+    function activate() {
+      vm.name = 'World!';
+      vm.greeting = greetingStart + ' ' + vm.name;
+    }
+  }
+
+})();
