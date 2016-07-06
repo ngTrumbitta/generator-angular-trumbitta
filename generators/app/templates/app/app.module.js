@@ -13,16 +13,18 @@
   * * thing2
   *
 */
-angular
-  .module('app', [
+(function() {
+  'use strict';
+
+  angular.module('app', [
     'app.config',
     'app.routes',
     'gettext'
-])
+  ])
+  .run(run);
 
-  .run(function(gettextCatalog, ENV) {
-    'use strict';
-
+  run.$inject = ['gettextCatalog', 'ENV'];
+  function run(gettextCatalog, ENV) {
     var lang = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
     lang = lang.substring(0,2);
 
@@ -33,9 +35,9 @@ angular
     //
     // gettextCatalog.debug = true;
     // gettextCatalog.showTranslatedMarkers = true;
-  });
+  }
 
-
+})();
 /**
   * @ngdoc object
   * @name app.controllers
