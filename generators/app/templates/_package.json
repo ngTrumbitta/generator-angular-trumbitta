@@ -43,7 +43,6 @@
     "grunt-karma": "~1.0.0",
     "grunt-newer": "~1.1.0",
     "grunt-ng-constant": "~1.1.0",
-    "grunt-ngdocs": "^0.2.9",
     "grunt-notify": "~0.4.1",
     "grunt-usemin": "^3.0.0",
     "jasmine": "~2.3.1",
