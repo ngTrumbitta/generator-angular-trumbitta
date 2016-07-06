@@ -11,24 +11,26 @@
   * - home
   *
 **/
+(function() {
+  'use strict';
 
-angular
-  .module('app.routes', [
+  angular.module('app.routes', [
     'ui.router',
     'app.controllers.home'
   ])
+  .config(config);
 
-  .config(function($stateProvider, $urlRouterProvider) {
-    'use strict';
-
+  config.$inject = ['$stateProvider', '$urlRouterProvider'];
+  function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
         templateUrl: 'app/components/home/home.template.html',
         controller: 'homeController',
         controllerAs: 'home'
-
       });
 
     $urlRouterProvider.otherwise('/');
-  });
+  }
+
+})();
