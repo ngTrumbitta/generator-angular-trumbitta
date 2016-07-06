@@ -1,16 +1,12 @@
 /**
-  * @ngdoc object
-  * @name app.routes
-  * @module app
-  * @requires app.controllers.home
-  *
+  * @ngdoc module
+  * @module app.routes
+  * @name routes
   * @description
-  * This module configure the `ui-router` with the states.
+  * Configures the routes, using `ui.router`.
   *
-  * The configured states are:
-  * - home
-  *
-**/
+  * Also notable is ...
+  */
 (function() {
   'use strict';
 

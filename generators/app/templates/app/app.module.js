@@ -1,18 +1,18 @@
 /**
   * @ngdoc overview
-  * @name app
   * @module app
-  * @requires app.config
-  *
+  * @name app
   * @description
-  * ## App
-  * This is angular app has been generated with `generator-angular-trumbitta`
+  * This Angular app has been generated with the
+  * {@link https://github.com/ngTrumbitta/generator-angular-trumbitta generator-angular-trumbitta}
+  * Yeoman generator, version `0.6.0`.
   *
-  * App does this:
-  * * thing1
-  * * thing2
+  * ## Main features
   *
-*/
+  * * One highlight
+  * * Another highlight
+  *
+  */
 (function() {
   'use strict';
 
@@ -38,57 +38,3 @@
   }
 
 })();
-/**
-  * @ngdoc object
-  * @name app.controllers
-  * @module app
-  * @description
-  *
-  * It is a logic container.
-  *
-  * All the controllers of the apps belong to this package.
-**/
-
-/**
-  * @ngdoc object
-  * @name app.directives
-  * @module app
-  * @description
-  *
-  * It is a logic container.
-  *
-  * All the directives of the apps belong to this package.
-**/
-
-/**
-  * @ngdoc object
-  * @name app.factories
-  * @module app
-  * @description
-  *
-  * It is a logic container.
-  *
-  * All the factories of the apps belong to this package.
-**/
-
-/**
-  * @ngdoc object
-  * @name app.services
-  * @module app
-  * @description
-  *
-  * It is a logic container.
-  *
-  * All the services of the apps belong to this package.
-**/
-
-/**
-  * @ngdoc object
-  * @name app.filters
-  * @module app
-  * @description
-  *
-  * It is a logic container.
-  *
-  * All the filters of the apps belong to this package.
-**/

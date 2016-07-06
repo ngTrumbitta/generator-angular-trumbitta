@@ -1,12 +1,10 @@
 /**
-  * @ngdoc object
-  * @name app.controllers.home
-  * @module app.controllers
-  *
+  * @ngdoc controller
+  * @module app.controllers.home
+  * @name homeController
   * @description
-  * Provides the {@link app.controllers.home.homeController homeController}
-  *
-**/
+  * Handles the most classic of all the greetings.
+  */
 (function() {
   'use strict';
 
