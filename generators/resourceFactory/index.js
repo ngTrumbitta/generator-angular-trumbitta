@@ -62,7 +62,8 @@ module.exports = yeoman.generators.Base.extend({
       {
         factoryName: this.props.factoryName + 'Factory',
         factoryModule: 'app.factories.' + this.props.factoryName.toLowerCase(),
-        factoryEntryPoint: factoryNameConstant
+        factoryEntryPoint: factoryNameConstant,
+        factoryNameConstructor: factoryNamePascal
       }
     );
 

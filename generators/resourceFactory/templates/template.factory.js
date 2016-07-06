@@ -1,3 +1,12 @@
+/**
+  * @ngdoc factory
+  * @module <%= factoryModule %>
+  * @name <%= factoryName %>
+  * @description
+  * Data access factory.
+  *
+  * Handles the access to `/my/entry/point`
+  */
 (function() {
   'use strict';
 
@@ -5,11 +14,9 @@
     'ngResource',
     'app.config'
   ])
-  .factory('<%= factoryName %>', <%= factoryName %>);
+  .factory('<%= factoryName %>', <%= factoryNameConstructor %>);
 
-  function <%= factoryName %>($resource, ENV, $q) {
-    'use strict';
-
+  function <%= factoryNameConstructor %>($resource, ENV, $q) {
     return $resource([
       ENV.BACKEND.URL.FULL,
       ENV.BACKEND.ENTRY_POINTS.<%= factoryEntryPoint %>
