@@ -1,6 +1,6 @@
 {
   "name": "generator-angular-trumbitta",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Opinionated enterprise AngularJS + Karma + Grunt, by Trumbitta",
   "license": "MIT",
   "main": "app/index.js",
