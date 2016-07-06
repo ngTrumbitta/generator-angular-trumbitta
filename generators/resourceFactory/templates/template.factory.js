@@ -1,3 +1,12 @@
+/**
+  * @ngdoc factory
+  * @module <%= factoryModule %>
+  * @name <%= factoryName %>
+  * @description
+  * Data access factory.
+  *
+  * Handles the access to `/my/entry/point`
+  */
 (function() {
   'use strict';
 
