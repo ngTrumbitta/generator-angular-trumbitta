@@ -5,7 +5,7 @@
   * @description
   * This Angular app has been generated with the
   * {@link https://github.com/ngTrumbitta/generator-angular-trumbitta generator-angular-trumbitta}
-  * Yeoman generator, version `0.6.0`.
+  * Yeoman generator, version `0.7.0`.
   *
   * ## Main features
   *
