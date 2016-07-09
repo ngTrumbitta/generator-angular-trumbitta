@@ -1,16 +1,22 @@
 # Enterprise Angular Yeoman Generator
 
-<!-- TOC depth:3 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:undefined depthTo:4 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Enterprise Angular Yeoman Generator](#enterprise-angular-yeoman-generator)
 	- [Prerequisites](#prerequisites)
 	- [Install](#install)
 	- [Use the generator](#use-the-generator)
 		- [Sub-generators](#sub-generators)
+			- [resourceFactory](#resourcefactory)
+			- [directive](#directive)
 	- [Use the generated application](#use-the-generated-application)
 		- [TL;DR](#tldr)
 		- [Directory layout](#directory-layout)
+			- [Notable entries](#notable-entries)
 		- [Development](#development)
+			- [Naming conventions](#naming-conventions)
+			- [Adding new libraries](#adding-new-libraries)
+			- [i18n](#i18n)
 		- [Documenting](#documenting)
 		- [Testing](#testing)
 		- [Production](#production)
@@ -19,6 +25,7 @@
 	- [Compatible packages](#compatible-packages)
 	- [Known issues](#known-issues)
 	- [License](#license)
+
 <!-- /TOC -->
 
 ![](yo.png)
@@ -112,6 +119,16 @@ Go where you want the new resource factory to be created, then:
 `$ yo angular-trumbitta:resourceFactory myFactoryName`
 
 The factory name argument is optional. If it's not supplied, Yeoman will ask you for it.
+
+#### directive
+
+The generator wants you to write a thin directive, but it really works for anything else.
+
+Go where you want the new directive to be created, then:
+
+`$ yo angular-trumbitta:directive myDirectiveName`
+
+The directive name argument is optional. If it's not supplied, Yeoman will ask you for it.
 
 ## Use the generated application
 
@@ -303,11 +320,6 @@ Wiredep will perform its magic and update `index.html` for you, adding proper po
 
 BTW, I consider a best practice to use Bower for libraries needed by the application you are developing, and npm for libraries needed by Grunt or any other *infrastructural* tool you might want to use.
 
-#### Subgenerators for factories, services, filters, everything
-
-I have a bunch of those already planned, and I'm going to add them one day or another (see issues on GitHub).  
-If you feel like helping, just let me know in the issues and I'll provide an example to be transformed into a subgenerator.
-
 #### i18n
 
 The generated app has a good enough support for your i18n needs, by using the way more than good enough [angular-gettext](https://angular-gettext.rocketeer.be/).
@@ -419,7 +431,7 @@ Task               |What it's for
 **TO BE EXPANDED – help wanted**
 
 `dev.config.json` is used in development (e.g. `grunt serve`), while `dist.config.json` is used in production (e.g. `grunt dist` and `grunt dist-package`).  
-They are but stubs, samples. You are free to organize and expand them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
+They are but stubs, samples. You are free to organize and expand on them as you wish. Their contents will be available wherever you inject `app.config` and pass the `ENV` service.  
 **Example:** `var myRESTBackend = ENV.BACKEND.URL.FULL;`
 
 ## Compatible packages
@@ -429,19 +441,7 @@ They are a small but growing bunch of services, directives, etc, following the s
 
 ## Known issues
 
-Until issue #12 gets fixed, to avoid an ugly blocking error at build time, you'll have to edit the `bower.json` of the generated app and change the version for the Bootstrap component from:
-
-```
-"bootstrap": "^3.3.4",
-```
-
-to:
-
-```
-"bootstrap": "3.3.4",
-```
-
-Once issue #12 is fixed, Bootstrap will also be updated to the last available 3.x version.
+None at this moment.
 
 ## License
 
