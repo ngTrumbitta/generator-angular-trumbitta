@@ -1,13 +1,18 @@
 describe('Controller: app.controllers.home', function() {
   'use strict';
   var vm,
-      scope;
+      $rootScope,
+      $scope,
+      $controller;
 
   beforeEach(module('app.controllers.home'));
 
-  beforeEach(inject(function($controller, $rootScope) {
-    scope = $rootScope.$new();
-    vm = $controller('homeController as vm', { $scope: scope });
+  beforeEach(inject(function(_$rootScope_, _$controller_) {
+    $rootScope = _$rootScope_;
+    $scope = $rootScope.$new();
+    $controller = _$controller_;
+
+    vm = $controller('homeController as vm', {'$rootScope': $rootScope, '$scope': $scope});
   }));
 
   it('should define a greeting', function() {
