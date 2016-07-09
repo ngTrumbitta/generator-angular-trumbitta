@@ -19,7 +19,9 @@
   'use strict';
 
   angular.module('<%= directiveModule %>', [])
-  .directive('<%= directiveName %>', function() {
+  .directive('<%= directiveName %>', <%= directiveNameConstructor %>);
+
+  function <%= directiveNameConstructor %>() {
     return {
       restrict: 'E',
       replace: 'true',
@@ -28,6 +30,6 @@
         myAttribute: '@'
       }
     };
-  });
+  }
 
 })();
